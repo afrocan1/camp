@@ -23,16 +23,16 @@
         }
         
         @font-face {
-	    font-family:'SF Pro Text';
-	    font-weight:lighter;
-	    src:url("./fonts/sf-pro-text_regular.woff2") format("woff");
+            font-family:'SF Pro Text';
+            font-weight:lighter;
+            src:url("./fonts/sf-pro-text_regular.woff2") format("woff");
             font-style:normal;
         }
         @font-face {
-	    font-family:'SF Pro Text Bold';
-	    font-style:normal;
-	    font-weight:bold;
-	    src:url("fonts/sf-pro-text_bold.woff2") format("woff");
+            font-family:'SF Pro Text Bold';
+            font-style:normal;
+            font-weight:bold;
+            src:url("fonts/sf-pro-text_bold.woff2") format("woff");
         }
 
         body{
@@ -45,6 +45,8 @@
             background-image:linear-gradient(to right,var(--color-black),var(--color-black));
             color:var(--color-text-primary);
             padding-right:1rem;
+            position:relative;
+            z-index:100;
         }
         .header-container{
             max-width:1200px;
@@ -53,8 +55,37 @@
             align-items:center;
             justify-content:space-between;
         }
+
+        .mobile-nav{
+            display:none;
+            flex-direction:column;
+            background-color:var(--color-black);
+            padding:1.5rem 2rem;
+            position:absolute;
+            top:100%;
+            left:0;
+            width:100%;
+            z-index:99;
+        }
+        .mobile-nav.open{
+            display:flex;
+        }
+        .mobile-nav a{
+            color:var(--color-text-primary);
+            font-size:1.6rem;
+            padding:1.2rem 0;
+            border-bottom:1px solid rgba(255,255,255,0.08);
+        }
+        .mobile-nav a:last-child{
+            border-bottom:none;
+        }
+        .mobile-nav .mobile-nav__selected{
+            opacity:0.5;
+            cursor:default;
+        }
+
         @media (max-width:31.25em){
-            .header__list > [class$='sub']{
+            .header__list > [class$="sub"]{
                 display:none;
             }
         }
@@ -64,6 +95,10 @@
             width:2.5rem;
             background-color:var(--color-text-primary);
             display:none;
+            cursor:pointer;
+            position:relative;
+            z-index:101;
+            transition:background-color 0.2s ease;
         }
         @media (max-width:31.25em){
             .header-hamburger{display:block;}
@@ -75,6 +110,7 @@
             width:100%;
             background-color:currentColor;
             display:block;
+            transition:transform 0.2s ease;
         }
         .header-hamburger::after{
             transform:translateY(.6rem);
@@ -82,6 +118,16 @@
         .header-hamburger::before{
             transform:translateY(-.7rem);
         }
+        .header-hamburger.open{
+            background-color:transparent;
+        }
+        .header-hamburger.open::before{
+            transform:translateY(0) rotate(45deg);
+        }
+        .header-hamburger.open::after{
+            transform:translateY(-2px) rotate(-45deg);
+        }
+
         .header__list,
         .list{
             list-style:none;
@@ -117,6 +163,7 @@
         .hero-biggy{
             flex-basis:50%;
         }
+
         @media (max-width:31.25em){
             .hero{
                 flex-direction:column;
@@ -128,6 +175,7 @@
                 padding:3rem;
             }
         }
+
         .hero-headline{
             font-size:4.8rem;
             font-family:'SF Pro Text Bold';
@@ -135,6 +183,7 @@
         }
         .hero-visual{
             width:10rem;
+            margin-bottom:2rem;
         }
         .hero-img{
             width:120%;
@@ -144,6 +193,7 @@
                 width:100%;
             }
         }
+
         a{
             text-decoration:none;
             font-family:inherit;
@@ -154,43 +204,83 @@
         a:active{
             color:currentColor;
         }
+
+        .hero__cta{
+            display:flex;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:1.2rem;
+        }
+
         .hero__cta-try-free{
             padding:1rem 1.5rem;
             border-radius:10rem;
-            margin-right:2rem;
             background-color:var(--color-text-primary);
+            white-space:nowrap;
         }
+        .hero__cta-try-free:hover{
+            background-color:black;
+            color:#fff;
+            transition:all 0.2s ease;
+        }
+
+        .hero__cta-learn-more{
+            white-space:nowrap;
+        }
+
         .hero-biggy{
             overflow:hidden;
         }
-        .hero__cta-try-free:hover{
-            background-color: black;
-            color: #fff;
-            transition: all;
+
+        @media (max-width:31.25em){
+            .hero__cta{
+                flex-direction:column;
+                align-items:flex-start;
+                gap:1.6rem;
+            }
+            .hero__cta-try-free{
+                width:100%;
+                text-align:center;
+                font-size:1.6rem;
+                padding:1.2rem 2rem;
+            }
+            .hero__cta-learn-more{
+                font-size:1.6rem;
+                color:var(--color-text-primary);
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
-     <div class="header-container">
-       <ul class="header__list list">
-           <li class="list__item"><img src="img/Goaradio.png" alt="GOARadio" class="logo"></li>
-           <li class="list__item sub"><a href="https://goaradio.org" style="color:var(--color-text-primary);">Stream</a></li>
-           <li class="list__item sub"><a href="https://app.goaradio.org" style="color:var(--color-text-primary);">Mobile</a></li>
-           <li class="list__item sub"><a href="https://artists.goaradio.org" style="color:var(--color-text-primary);">Artists</a></li>
-           <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Earn</a></li>
-           <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Label</a></li>
-           <li class="list__item list__item-selected sub">Camp</li>
-           <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Support</a></li>
-           <li class="list__item sub"><i class="fas fa-search"></i></li>
-       </ul> 
-       <div class="header-hamburger">
-       </div> 
-     </div>
+      <div class="header-container">
+        <ul class="header__list list">
+            <li class="list__item"><img src="img/Goaradio.png" alt="GOARadio" class="logo"></li>
+            <li class="list__item sub"><a href="https://goaradio.org" style="color:var(--color-text-primary);">Stream</a></li>
+            <li class="list__item sub"><a href="https://app.goaradio.org" style="color:var(--color-text-primary);">Mobile</a></li>
+            <li class="list__item sub"><a href="https://artists.goaradio.org" style="color:var(--color-text-primary);">Artists</a></li>
+            <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Earn</a></li>
+            <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Label</a></li>
+            <li class="list__item list__item-selected sub">Camp</li>
+            <li class="list__item sub"><a href="#" style="color:var(--color-text-primary);">Support</a></li>
+            <li class="list__item sub"><i class="fas fa-search" style="color:var(--color-text-primary);"></i></li>
+        </ul> 
+        <div class="header-hamburger" id="hamburger"></div>
+      </div>
+      <nav class="mobile-nav" id="mobileNav">
+          <a href="https://goaradio.org">Stream</a>
+          <a href="https://app.goaradio.org">Mobile</a>
+          <a href="https://artists.goaradio.org">Artists</a>
+          <a href="#">Earn</a>
+          <a href="#">Label</a>
+          <a class="mobile-nav__selected">Camp</a>
+          <a href="#">Support</a>
+      </nav>
     </header>
-    <canvas id="main"></canvas>
-    <section class="hero">
 
+    <canvas id="main"></canvas>
+
+    <section class="hero">
         <div class="hero-text">
             <img src="img/Goaradio white.png" alt="GOARadio Recording Camp" class="hero-visual">
             <p class="hero-headline">Your next hit starts here.</p>
@@ -202,8 +292,24 @@
         <div class="hero-biggy">
             <img src="img/hero_ipad.png" alt="" class="hero-img">
         </div>
-        
     </section>
+
     <script src="js/canvas1.js"></script>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        mobileNav.querySelectorAll('a[href]').forEach(function(link) {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+    </script>
 </body>
 </html>
