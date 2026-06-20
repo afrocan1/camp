@@ -3,218 +3,682 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas</title>
+    <title>Goaradio Recording Camp — Season 1</title>
     <script src="https://kit.fontawesome.com/e01677a071.js"></script>
     
-    <!--- Style --->
     <style>
-        :root{
-            --color-black:rgba(0,0,0,0.92);
-            --color-text-primary:#f5f5f7;
-        }
-        
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-        
-        html{
-            font-size:66%;
-        }
-        
-        @font-face {
-	    font-family:'SF Pro Text';
-	    font-weight:lighter;
-	    src:url("./fonts/sf-pro-text_regular.woff2") format("woff");
-        font-style:normal;
-     }
-        @font-face {
-	    font-family:'SF Pro Text Bold';
-	    font-style:normal;
-	    font-weight:bold;
-	    src:url("fonts/sf-pro-text_bold.woff2") format("woff");
-     }
-        body{
-            position:relative;
-            font-family:'SF Pro Text';
-            position:relative;
-            overflow:hidden;  
-/*             Change it Later Just do it for clearing out extra flow :) */
+        :root {
+            --color-black: rgba(0,0,0,0.95);
+            --color-white: #f5f5f7;
+            --color-gold: #C9A84C;
+            --color-gold-light: #E8C97A;
+            --color-gold-dim: rgba(201,168,76,0.15);
         }
 
-        .header{
-            background-image:linear-gradient(to right,var(--color-black),var(--color-black));
-            color:var(--color-text-primary);
-            padding-right:1rem;
-            
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .header-container{
-            max-width:1200px;
-            display:flex;
-            margin:0 auto;
-            align-items:center;
-            justify-content:space-between;
-            
-            
+
+        html {
+            font-size: 66%;
         }
-        @media (max-width:31.25em){
-            .header__list > [class$='sub']{
-                display:none;
-            }
+
+        @font-face {
+            font-family: 'SF Pro Text';
+            font-weight: lighter;
+            src: url("./fonts/sf-pro-text_regular.woff2") format("woff");
+            font-style: normal;
         }
-        
-        .header-hamburger{
-            height:2px;
-            width:2.5rem;
-            background-color:var(--color-text-primary);
-            display:none;
+
+        @font-face {
+            font-family: 'SF Pro Text Bold';
+            font-style: normal;
+            font-weight: bold;
+            src: url("fonts/sf-pro-text_bold.woff2") format("woff");
         }
-        @media (max-width:31.25em){
-            .header-hamburger{display:block;}
+
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #0a0a0a;
+            color: var(--color-white);
+            overflow-x: hidden;
         }
-        .header-hamburger::before,
-        .header-hamburger::after{
-            content:"";
-            height:100%;
-            width:100%;
-            background-color:currentColor;
-            display:block;
+
+        /* ── HEADER ── */
+        .header {
+            background-color: rgba(10,10,10,0.92);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid rgba(201,168,76,0.18);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding-right: 1rem;
         }
-        .header-hamburger::after{
-            transform:translateY(.6rem);
+
+        .header-container {
+            max-width: 1200px;
+            display: flex;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
         }
-        .header-hamburger::before{
-            transform:translateY(-.7rem);
-        }
+
         .header__list,
-        .list{
-            list-style:none;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            flex-grow:1;
+        .list {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 1;
         }
-        .list__item{
-            padding:0.5rem;
-            font-size:1.4rem;
-        }
-        .list__item-selected{
-            opacity:0.56;
-        }
-        .logo{
-            width:30px;
-        }
-        
-        .hero{
-            display:flex;
-            justify-content:space-between;
-/*            max-width:1200px;*/
-            margin:0 auto;
-            align-items:center;
-            padding-left:15rem;
-            position:absolute;
-            top:0;
-            left:0;
-            margin-top:10rem;
 
+        .list__item {
+            padding: 0.75rem 0.5rem;
+            font-size: 1.3rem;
+            color: var(--color-white);
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: color 0.2s;
         }
-        
-        .hero-text,
-        .hero-biggy{
-            flex-basis:50%;
+
+        .list__item:hover {
+            color: var(--color-gold);
         }
-        @media (max-width:31.25em){
-            .hero{
-                flex-direction:column;
-                padding:2rem;
-                justify-content:space-between;
-                height:95%;
-            
+
+        .list__item-selected {
+            color: var(--color-gold);
+        }
+
+        .logo {
+            width: 30px;
+        }
+
+        @media (max-width: 31.25em) {
+            .header__list > [class$='sub'] {
+                display: none;
             }
-            .hero-text{
-                padding:3rem;
-            }
-        }
-        .hero-headline{
-            font-size:4.8rem;
-            font-family:'SF Pro Text Bold';
-            margin-bottom:3rem;
-                
-        }
-        .hero-visual{
-            width:10rem;
-        }
-        .hero-img{
-            width:120%;
-            
-        }
-        @media (max-width:31.25em){
-            .hero-img{
-                width:100%;
+            .header-hamburger {
+                display: block;
             }
         }
-        a{
-            text-decoration:none;
-            font-family:inherit;
-            color:var(--color-black);
-            font-size:1.4rem;
+
+        .header-hamburger {
+            height: 2px;
+            width: 2.5rem;
+            background-color: var(--color-white);
+            display: none;
         }
-        a:visited,
-        a:active{
-            color:currentColor;
+
+        .header-hamburger::before,
+        .header-hamburger::after {
+            content: "";
+            height: 100%;
+            width: 100%;
+            background-color: currentColor;
+            display: block;
         }
-        .hero__cta-try-free{
-            padding:1rem 1.5rem;
-            border-radius:10rem;
-            margin-right:2rem;
-            background-color:var(--color-text-primary);
+
+        .header-hamburger::after { transform: translateY(.6rem); }
+        .header-hamburger::before { transform: translateY(-.7rem); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8rem 15rem 6rem 15rem;
+            position: relative;
+            overflow: hidden;
         }
-        .hero-biggy{
-            overflow:hidden;
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 55%;
+            height: 120%;
+            background: radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.07) 0%, transparent 65%);
+            pointer-events: none;
         }
-        .hero__cta-try-free:hover{
-            background-color: black;
-            color: #fff;
-            transition: all;
+
+        .hero-text {
+            flex-basis: 48%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-biggy {
+            flex-basis: 48%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .season-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background-color: var(--color-gold-dim);
+            border: 0.5px solid var(--color-gold);
+            color: var(--color-gold-light);
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            border-radius: 10rem;
+            margin-bottom: 2.4rem;
+        }
+
+        .season-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-gold);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .hero-visual {
+            width: 8rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .hero-headline {
+            font-size: 5.2rem;
+            font-family: 'SF Pro Text Bold', -apple-system, sans-serif;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-headline span {
+            color: var(--color-gold);
+        }
+
+        .hero-subline {
+            font-size: 1.8rem;
+            color: rgba(245,245,247,0.65);
+            line-height: 1.6;
+            margin-bottom: 3.2rem;
+            max-width: 44rem;
+        }
+
+        .hero__cta {
+            display: flex;
+            align-items: center;
+            gap: 2.4rem;
+            flex-wrap: wrap;
+        }
+
+        a {
+            text-decoration: none;
+            font-family: inherit;
+            color: inherit;
+            font-size: 1.4rem;
+        }
+
+        a:visited, a:active {
+            color: currentColor;
+        }
+
+        .hero__cta-primary {
+            padding: 1.2rem 2.4rem;
+            border-radius: 10rem;
+            background-color: var(--color-gold);
+            color: #0a0a0a;
+            font-family: 'SF Pro Text Bold', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 0.01em;
+            transition: background-color 0.2s, transform 0.15s;
+            display: inline-block;
+        }
+
+        .hero__cta-primary:hover {
+            background-color: var(--color-gold-light);
+            transform: translateY(-1px);
+            color: #0a0a0a;
+        }
+
+        .hero__cta-secondary {
+            color: rgba(245,245,247,0.75);
+            font-size: 1.4rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero__cta-secondary:hover {
+            color: var(--color-gold);
+        }
+
+        /* free slots bar */
+        .slots-note {
+            margin-top: 2.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .slots-bar {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .slot {
+            width: 1.8rem;
+            height: 0.4rem;
+            border-radius: 10rem;
+        }
+
+        .slot-taken {
+            background-color: var(--color-gold);
+        }
+
+        .slot-open {
+            background-color: rgba(201,168,76,0.22);
+        }
+
+        .slots-text {
+            font-size: 1.2rem;
+            color: rgba(245,245,247,0.5);
+        }
+
+        .slots-text strong {
+            color: var(--color-gold-light);
+            font-weight: normal;
+        }
+
+        /* hero image */
+        .hero-img {
+            width: 110%;
+            max-width: 680px;
+            position: relative;
+        }
+
+        /* ── WHAT YOU GET ── */
+        .services {
+            padding: 8rem 15rem;
+            border-top: 0.5px solid rgba(255,255,255,0.06);
+        }
+
+        .section-label {
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            margin-bottom: 1.2rem;
+        }
+
+        .section-headline {
+            font-size: 3.6rem;
+            font-family: 'SF Pro Text Bold', sans-serif;
+            line-height: 1.15;
+            margin-bottom: 5rem;
+            max-width: 52rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: rgba(255,255,255,0.03);
+            border: 0.5px solid rgba(255,255,255,0.08);
+            border-radius: 1.6rem;
+            padding: 2.8rem 2.4rem;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(201,168,76,0.3);
+            background-color: rgba(201,168,76,0.04);
+        }
+
+        .service-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background-color: var(--color-gold-dim);
+            border: 0.5px solid rgba(201,168,76,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+            color: var(--color-gold);
+        }
+
+        .service-title {
+            font-size: 1.7rem;
+            font-family: 'SF Pro Text Bold', sans-serif;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-desc {
+            font-size: 1.4rem;
+            color: rgba(245,245,247,0.55);
+            line-height: 1.6;
+        }
+
+        /* ── TIERS ── */
+        .tiers {
+            padding: 8rem 15rem;
+            border-top: 0.5px solid rgba(255,255,255,0.06);
+        }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .tier-card {
+            border-radius: 2rem;
+            padding: 3.6rem 3.2rem;
+            border: 0.5px solid rgba(255,255,255,0.08);
+        }
+
+        .tier-card.free {
+            background-color: rgba(255,255,255,0.03);
+        }
+
+        .tier-card.paid {
+            background-color: rgba(201,168,76,0.06);
+            border-color: rgba(201,168,76,0.25);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            border-radius: 10rem;
+            margin-bottom: 2rem;
+        }
+
+        .tier-badge.free {
+            background-color: rgba(255,255,255,0.06);
+            color: rgba(245,245,247,0.7);
+        }
+
+        .tier-badge.paid {
+            background-color: var(--color-gold-dim);
+            color: var(--color-gold);
+            border: 0.5px solid rgba(201,168,76,0.35);
+        }
+
+        .tier-price {
+            font-size: 4.4rem;
+            font-family: 'SF Pro Text Bold', sans-serif;
+            line-height: 1;
+            margin-bottom: 0.6rem;
+        }
+
+        .tier-price sup {
+            font-size: 2rem;
+            vertical-align: super;
+        }
+
+        .tier-price-note {
+            font-size: 1.3rem;
+            color: rgba(245,245,247,0.45);
+            margin-bottom: 3rem;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-bottom: 3.2rem;
+        }
+
+        .tier-features li {
+            font-size: 1.45rem;
+            color: rgba(245,245,247,0.75);
+            padding: 0.8rem 0;
+            border-bottom: 0.5px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tier-features li i {
+            color: var(--color-gold);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .tier-cta {
+            display: block;
+            text-align: center;
+            padding: 1.2rem 2rem;
+            border-radius: 10rem;
+            font-size: 1.4rem;
+            font-family: 'SF Pro Text Bold', sans-serif;
+            font-weight: 700;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .tier-cta.free {
+            background-color: #f5f5f7;
+            color: #0a0a0a;
+        }
+
+        .tier-cta.free:hover {
+            background-color: #fff;
+        }
+
+        .tier-cta.paid {
+            background-color: var(--color-gold);
+            color: #0a0a0a;
+        }
+
+        .tier-cta.paid:hover {
+            background-color: var(--color-gold-light);
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            padding: 4rem 15rem;
+            border-top: 0.5px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-note {
+            font-size: 1.3rem;
+            color: rgba(245,245,247,0.35);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.4rem;
+        }
+
+        .footer-links a {
+            font-size: 1.3rem;
+            color: rgba(245,245,247,0.4);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-gold);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 31.25em) {
+            .hero {
+                flex-direction: column;
+                padding: 4rem 2.4rem 6rem;
+                min-height: auto;
+                gap: 4rem;
+            }
+
+            .hero-text { flex-basis: auto; }
+            .hero-biggy { display: none; }
+            .hero-headline { font-size: 3.6rem; }
+
+            .services,
+            .tiers { padding: 6rem 2.4rem; }
+
+            .tiers-grid { grid-template-columns: 1fr; }
+
+            .footer { padding: 3rem 2.4rem; flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
+
+    <!-- HEADER -->
     <header class="header">
-     <div class="header-container">
-       <ul class="header__list list">
-           <li class="list__item"><img src="img/logo.png" alt="" class="logo"></li>
-           <li class="list__item sub">Mac</li>
-           <li class="list__item sub">iPad</li>
-           <li class="list__item sub">iPhone</li>
-           <li class="list__item sub">Watch</li>
-           <li class="list__item sub">TV</li>
-           <li class="list__item list__item-selected sub">Music</li>
-           <li class="list__item sub">Support</li>
-           <li class="list__item sub">Where to Buy</li>
-           <li class="list__item sub"><i class="fas fa-search"></i></li>
-       </ul> 
-       <div class="header-hamburger">
-       </div> 
-     </div>
+        <div class="header-container">
+            <ul class="header__list list">
+                <li class="list__item"><img src="img/logo.png" alt="Goaradio" class="logo"></li>
+                <li class="list__item sub">Artists</li>
+                <li class="list__item sub">Partners</li>
+                <li class="list__item sub">Distribution</li>
+                <li class="list__item sub">Earn</li>
+                <li class="list__item list__item-selected sub">Recording Camp</li>
+                <li class="list__item sub">About</li>
+                <li class="list__item sub"><i class="fas fa-search"></i></li>
+            </ul>
+            <div class="header-hamburger"></div>
+        </div>
     </header>
+
+    <!-- HERO -->
     <canvas id="main"></canvas>
     <section class="hero">
-
         <div class="hero-text">
-            <img src="img/apple_music.png" alt="" class="hero-visual">
-            <p class="hero-headline">Lose yourself in 60 million songs.</p>
+            <div class="season-pill">
+                <span class="season-pill-dot"></span>
+                Season 1 — Now Open
+            </div>
+            <img src="img/apple_music.png" alt="Goaradio" class="hero-visual">
+            <h1 class="hero-headline">Your music,<br>recorded <span>right.</span></h1>
+            <p class="hero-subline">
+                Goaradio Recording Camp is where artists come to make the record they actually hear in their heads. Studio time, distribution, and everything in between.
+            </p>
             <div class="hero__cta">
-                <a href="#" class="hero__cta-try-free">Try it free*</a>
-                <a href="#" class="hero__cta-learn-more">Learn more &rarr;</a>
+                <a href="#" class="hero__cta-primary">Apply for a free slot</a>
+                <a href="#" class="hero__cta-secondary">See what's included &rarr;</a>
+            </div>
+            <div class="slots-note">
+                <div class="slots-bar">
+                    <div class="slot slot-taken"></div>
+                    <div class="slot slot-taken"></div>
+                    <div class="slot slot-taken"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                    <div class="slot slot-open"></div>
+                </div>
+                <span class="slots-text"><strong>3 of 10 free slots filled.</strong> First come, first served.</span>
             </div>
         </div>
         <div class="hero-biggy">
             <img src="img/hero_ipad.png" alt="" class="hero-img">
         </div>
-        
     </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="services">
+        <p class="section-label">What's included</p>
+        <h2 class="section-headline">Everything you need to release without compromise.</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-microphone-alt"></i></div>
+                <h3 class="service-title">Professional recording</h3>
+                <p class="service-desc">Access to partner studios equipped and staffed for the kind of sound that holds up anywhere.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-sliders-h"></i></div>
+                <h3 class="service-title">Mixing & mastering</h3>
+                <p class="service-desc">Your tracks mixed and mastered by engineers who work on releases people actually remember.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <h3 class="service-title">Global distribution</h3>
+                <p class="service-desc">Your music on every major platform the same day it's done. No delays, no middlemen cutting into your royalties.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-coins"></i></div>
+                <h3 class="service-title">Earn from day one</h3>
+                <p class="service-desc">GOA token rewards on streams and plays, on top of standard royalties. You keep what you earn.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIERS -->
+    <section class="tiers">
+        <p class="section-label">Slots</p>
+        <h2 class="section-headline">Free for the first ten. Paid for everyone after.</h2>
+        <div class="tiers-grid">
+
+            <div class="tier-card free">
+                <span class="tier-badge free">Free — First 10 slots</span>
+                <div class="tier-price">$0</div>
+                <p class="tier-price-note">No cost, no strings. Just your music.</p>
+                <ul class="tier-features">
+                    <li><i class="fas fa-check"></i> Full studio time with a partner engineer</li>
+                    <li><i class="fas fa-check"></i> Mixing & mastering included</li>
+                    <li><i class="fas fa-check"></i> Distribution to all major platforms</li>
+                    <li><i class="fas fa-check"></i> GOA token stream rewards</li>
+                    <li><i class="fas fa-check"></i> Goaradio artist profile & dashboard</li>
+                </ul>
+                <a href="#" class="tier-cta free">Apply now</a>
+            </div>
+
+            <div class="tier-card paid">
+                <span class="tier-badge paid">Paid — Open slots</span>
+                <div class="tier-price"><sup>$</sup>TBA</div>
+                <p class="tier-price-note">Pricing announced before Season 1 closes.</p>
+                <ul class="tier-features">
+                    <li><i class="fas fa-check"></i> Everything in the free tier</li>
+                    <li><i class="fas fa-check"></i> Priority booking & scheduling</li>
+                    <li><i class="fas fa-check"></i> Extended studio sessions</li>
+                    <li><i class="fas fa-check"></i> Dedicated A&amp;R support</li>
+                    <li><i class="fas fa-check"></i> Early access to Season 2 slots</li>
+                </ul>
+                <a href="#" class="tier-cta paid">Join the waitlist</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="footer-note">&copy; 2025 Goaradio. Recording Camp is a Season 1 initiative in partnership with our studio network.</p>
+        <div class="footer-links">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+        </div>
+    </footer>
+
     <script src="js/canvas1.js"></script>
 </body>
 </html>
