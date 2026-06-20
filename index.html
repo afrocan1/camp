@@ -233,20 +233,27 @@
         }
 
         @media (max-width:31.25em){
+            .hero-headline{
+                font-size:3.2rem;
+                margin-bottom:2rem;
+            }
             .hero__cta{
-                flex-direction:column;
-                align-items:flex-start;
-                gap:1.6rem;
+                flex-direction:row;
+                align-items:center;
+                gap:1rem;
+                flex-wrap:nowrap;
             }
             .hero__cta-try-free{
-                width:100%;
+                width:auto;
                 text-align:center;
-                font-size:1.6rem;
-                padding:1.2rem 2rem;
+                font-size:1.2rem;
+                padding:0.8rem 1.4rem;
+                white-space:nowrap;
             }
             .hero__cta-learn-more{
-                font-size:1.6rem;
+                font-size:1.2rem;
                 color:var(--color-black);
+                white-space:nowrap;
             }
         }
     </style>
