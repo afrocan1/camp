@@ -146,11 +146,11 @@
         /* FIX 3: hero is now in normal flow, not position:absolute.
            Canvas sits behind it via z-index. */
         .hero-wrapper {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            background: var(--color-black);
-        }
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: transparent;
+}
 
         canvas#main {
             position: absolute;
@@ -447,10 +447,11 @@
             line-height: 1.65;
         }
         .pillar-card__visual {
-            aspect-ratio: 1;
-            border-radius: 0.8rem;
-            overflow: hidden;
-        }
+    aspect-ratio: 1;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    width: 100%;
+}
         .pillar-card--wide {
             grid-column: 1 / -1;
             grid-template-columns: 2fr 1fr;
