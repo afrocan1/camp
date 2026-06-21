@@ -281,6 +281,14 @@
 }
         .section--alt { background: var(--section-alt); }
 
+        #experience {
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(200,151,58,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,151,58,0.05) 0%, transparent 55%),
+                radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255,255,255,0.012) 0%, transparent 70%),
+                #0a0a0a;
+        }
+
         .container {
             width: min(120rem, 90vw);
             margin: 0 auto;
@@ -461,18 +469,21 @@
         .pillars-track.is-dragging { cursor: grabbing; }
 
         .pillar-card {
-            flex: 0 0 36rem;
-            background: var(--black-card);
-            border: 1px solid var(--black-border);
-            border-radius: 2rem;
-            padding: 3.6rem;
+            flex: 0 0 26rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 1.6rem;
+            padding: 2.4rem;
             display: flex;
             flex-direction: column;
-            gap: 2.8rem;
+            gap: 2rem;
             scroll-snap-align: start;
-            transition: border-color 0.3s ease, transform 0.3s var(--ease-out-expo);
+            transition: border-color 0.3s ease, transform 0.3s var(--ease-out-expo),
+                        background 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .pillar-card::before {
             content: '';
@@ -482,8 +493,9 @@
             pointer-events: none;
         }
         .pillar-card:hover {
-            border-color: rgba(200,151,58,0.4);
-            transform: translateY(-3px);
+            border-color: rgba(200,151,58,0.35);
+            background: rgba(255,255,255,0.07);
+            transform: translateY(-4px);
         }
 
         .pillar-card__visual {
@@ -540,7 +552,7 @@
         }
 
         @media (max-width: 600px) {
-            .pillar-card { flex: 0 0 80vw; }
+            .pillar-card { flex: 0 0 72vw; }
         }
 
         /* ─── MANIFESTO ──────────────────────────────────────── */
@@ -882,7 +894,7 @@
     <section class="manifesto-section">
         <div class="container">
             <p class="manifesto-body reveal">
-                This isn't just about recording songs. It's about helping artists <em>find their sound,</em> build their brand, create meaningful connections, and get discovered through opportunities provided by <em>The Cartel</em> and Goaradio.
+                This isn't just about recording songs. It's about helping artists <em>find their sound,</em> build their brand, create meaningful connections, and get discovered through opportunities provided by <em>The Creative Cartel</em> and Goaradio.
             </p>
         </div>
     </section>
