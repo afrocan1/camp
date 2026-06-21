@@ -283,9 +283,10 @@
 
         #experience {
             background:
-                radial-gradient(ellipse 80% 50% at 20% 0%, rgba(200,151,58,0.07) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,151,58,0.05) 0%, transparent 55%),
-                radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255,255,255,0.012) 0%, transparent 70%),
+                radial-gradient(ellipse 90% 60% at 15% -10%, rgba(200,151,58,0.13) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 50% at 85% 110%, rgba(200,151,58,0.09) 0%, transparent 50%),
+                radial-gradient(ellipse 120% 90% at 50% 50%, rgba(255,255,255,0.018) 0%, transparent 65%),
+                radial-gradient(ellipse 60% 40% at 60% 20%, rgba(80,40,180,0.04) 0%, transparent 60%),
                 #0a0a0a;
         }
 
@@ -432,7 +433,7 @@
         }
         .pillars-head .display-headline { margin-bottom: 1.6rem; }
 
-        /* track wraps the scrollable row + fades */
+        /* ─── SECTION 2: PILLARS CAROUSEL ───────────────────── */
         .pillars-track-wrap {
             position: relative;
         }
@@ -442,117 +443,158 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 8rem;
+            width: 12rem;
             z-index: 2;
             pointer-events: none;
         }
         .pillars-track-wrap::before {
             left: 0;
-            background: linear-gradient(to right, #0f0f0f, transparent);
+            background: linear-gradient(to right, #0a0a0a 0%, transparent 100%);
         }
         .pillars-track-wrap::after {
             right: 0;
-            background: linear-gradient(to left, #0f0f0f, transparent);
+            background: linear-gradient(to left, #0a0a0a 0%, transparent 100%);
         }
 
         .pillars-track {
             display: flex;
-            gap: 2rem;
+            gap: 2.4rem;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            padding: 1rem 2rem 3rem;
+            padding: 2rem 8vw 4rem;
             cursor: grab;
+            align-items: stretch;
         }
         .pillars-track::-webkit-scrollbar { display: none; }
-        .pillars-track.is-dragging { cursor: grabbing; }
+        .pillars-track.is-dragging { cursor: grabbing; user-select: none; }
 
         .pillar-card {
-            flex: 0 0 26rem;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 1.6rem;
-            padding: 2.4rem;
+            flex: 0 0 32rem;
+            min-height: 46rem;
+            background: linear-gradient(160deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(200,151,58,0.13);
+            border-radius: 2rem;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
             scroll-snap-align: start;
-            transition: border-color 0.3s ease, transform 0.3s var(--ease-out-expo),
-                        background 0.3s ease;
+            transition: border-color 0.4s ease, transform 0.4s var(--ease-out-expo), box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 32px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.06) inset;
         }
         .pillar-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at top left, rgba(200,151,58,0.06), transparent 65%);
+            background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(200,151,58,0.09), transparent 70%);
             pointer-events: none;
+            z-index: 0;
+        }
+        .pillar-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(200,151,58,0.4), transparent);
+            pointer-events: none;
+            z-index: 1;
         }
         .pillar-card:hover {
-            border-color: rgba(200,151,58,0.35);
-            background: rgba(255,255,255,0.07);
-            transform: translateY(-4px);
+            border-color: rgba(200,151,58,0.45);
+            transform: translateY(-6px) scale(1.012);
+            box-shadow: 0 16px 56px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,151,58,0.18), 0 1px 0 rgba(255,255,255,0.08) inset;
         }
 
         .pillar-card__visual {
             aspect-ratio: 16/9;
-            border-radius: 1rem;
+            border-radius: 0;
             overflow: hidden;
             width: 100%;
             flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid rgba(200,151,58,0.1);
         }
+
+        .pillar-card__text {
+            padding: 2.8rem 2.8rem 3rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
         .pillar-card__icon-wrap {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 0.8rem;
-            background: var(--amber-dim);
+            width: 4.4rem;
+            height: 4.4rem;
+            border-radius: 1rem;
+            background: rgba(200,151,58,0.12);
+            border: 1px solid rgba(200,151,58,0.22);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.6rem;
+            margin-bottom: 2rem;
             flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(200,151,58,0.12);
         }
-        .pillar-card__icon-wrap i { font-size: 1.6rem; color: var(--amber); }
+        .pillar-card__icon-wrap i { font-size: 1.8rem; color: var(--amber); }
+
         .pillar-card__title {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #f0ede6;
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
         }
         .pillar-card__body {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             color: var(--text-muted);
-            line-height: 1.65;
+            line-height: 1.7;
+            font-family: var(--font-body);
         }
 
         /* scroll dots */
         .pillars-dots {
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
-            margin-top: 3.2rem;
+            gap: 1rem;
+            margin-top: 3.6rem;
         }
         .pillars-dots__dot {
-            width: 0.6rem;
-            height: 0.6rem;
-            border-radius: 50%;
-            background: var(--black-border);
-            transition: background 0.3s ease, transform 0.3s ease;
+            width: 2.4rem;
+            height: 0.4rem;
+            border-radius: 10rem;
+            background: rgba(255,255,255,0.1);
+            transition: background 0.35s ease, width 0.35s var(--ease-out-expo);
+            cursor: pointer;
         }
         .pillars-dots__dot.active {
             background: var(--amber);
-            transform: scale(1.4);
+            width: 4rem;
         }
 
+        @media (max-width: 900px) {
+            .pillar-card { flex: 0 0 28rem; }
+        }
         @media (max-width: 600px) {
-            .pillar-card { flex: 0 0 72vw; }
+            .pillar-card { flex: 0 0 78vw; min-height: 42rem; }
+            .pillars-track-wrap::before,
+            .pillars-track-wrap::after { width: 4rem; }
+            .pillar-card__text { padding: 2.2rem 2.2rem 2.4rem; }
+            .pillar-card__title { font-size: 1.9rem; }
+        }
+        @media (max-width: 380px) {
+            .pillar-card { flex: 0 0 86vw; }
         }
 
         /* ─── MANIFESTO ──────────────────────────────────────── */
@@ -1112,6 +1154,18 @@
                 });
             }
             track.addEventListener('scroll', updateDots, { passive: true });
+
+            /* dot click to jump */
+            dots.forEach(function (dot, i) {
+                dot.addEventListener('click', function () {
+                    var cards = track.querySelectorAll('.pillar-card');
+                    if (cards[i]) {
+                        stopAuto();
+                        track.scrollTo({ left: cards[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+                        setTimeout(startAuto, 5000);
+                    }
+                });
+            });
 
             /* auto-scroll every 3.5s, pauses on interaction */
             var autoTimer;
