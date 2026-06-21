@@ -1294,6 +1294,10 @@
                             <div class="intro-stat__num">∞</div>
                             <div class="intro-stat__label">Connections</div>
                         </div>
+                        <div class="intro-stat">
+                            <div class="intro-stat__num" id="submissionCount">...</div>
+                            <div class="intro-stat__label">Applications</div>
+                        </div>
                     </div>
                 </div>
                 <div class="intro-grid__visual reveal reveal-delay-2">
@@ -1729,6 +1733,12 @@
             if (res.ok) {
                 formWrap.style.display = 'none';
                 successPanel.classList.add('show');
+                fetch('https://api.countapi.xyz/hit/goaradio-camp/applications')
+                    .then(function(r){ return r.json(); })
+                    .then(function(d){
+                        var el = document.getElementById('submissionCount');
+                        if (el) el.textContent = d.value;
+                    });
             } else {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Something went wrong. Try again.';
@@ -1740,6 +1750,19 @@
         });
     });
 })();
+</script>
+
+<script>
+    fetch('https://api.countapi.xyz/get/goaradio-camp/applications')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+            var el = document.getElementById('submissionCount');
+            if (el) el.textContent = d.value || 0;
+        })
+        .catch(function(){
+            var el = document.getElementById('submissionCount');
+            if (el) el.textContent = '0';
+        });
 </script>
 
 <script type="module" src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"></script>
