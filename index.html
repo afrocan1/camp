@@ -771,6 +771,21 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
             opacity: 0.4;
         }
+        .studio-lottie {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    display: block;
+    margin: 0 auto;
+}
+
+.intro-grid__visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
     </style>
 </head>
 <body>
@@ -859,9 +874,13 @@
                     </div>
                 </div>
                 <div class="intro-grid__visual iso-placeholder reveal reveal-delay-2">
-                    <i class="fas fa-headphones"></i>
-                    <span>Isometric Studio Visual</span>
-                </div>
+    <dotlottie-wc
+        src="https://lottie.host/19912d9b-e458-4b07-b29b-767ce57c6034/FDzVrf7Zgq.lottie"
+        autoplay
+        loop
+        class="studio-lottie">
+    </dotlottie-wc>
+</div>
             </div>
         </div>
     </section>
