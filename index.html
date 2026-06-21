@@ -420,38 +420,91 @@
         /* ─── SECTION 2: PILLARS ─────────────────────────────── */
         .pillars-head {
             text-align: center;
-            margin-bottom: 7rem;
+            margin-bottom: 6rem;
         }
         .pillars-head .display-headline { margin-bottom: 1.6rem; }
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.4rem;
+
+        /* track wraps the scrollable row + fades */
+        .pillars-track-wrap {
+            position: relative;
         }
+        .pillars-track-wrap::before,
+        .pillars-track-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .pillars-track-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, #0f0f0f, transparent);
+        }
+        .pillars-track-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, #0f0f0f, transparent);
+        }
+
+        .pillars-track {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 1rem 2rem 3rem;
+            cursor: grab;
+        }
+        .pillars-track::-webkit-scrollbar { display: none; }
+        .pillars-track.is-dragging { cursor: grabbing; }
+
         .pillar-card {
+            flex: 0 0 36rem;
             background: var(--black-card);
             border: 1px solid var(--black-border);
-            border-radius: 1.6rem;
-            padding: 4rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3.2rem;
-            align-items: center;
-            transition: border-color 0.3s ease;
+            border-radius: 2rem;
+            padding: 3.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.8rem;
+            scroll-snap-align: start;
+            transition: border-color 0.3s ease, transform 0.3s var(--ease-out-expo);
+            position: relative;
             overflow: hidden;
         }
-        .pillar-card:hover { border-color: var(--amber); }
-        .pillar-card__icon-wrap {
-            width: 4.4rem;
-            height: 4.4rem;
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at top left, rgba(200,151,58,0.06), transparent 65%);
+            pointer-events: none;
+        }
+        .pillar-card:hover {
+            border-color: rgba(200,151,58,0.4);
+            transform: translateY(-3px);
+        }
+
+        .pillar-card__visual {
+            aspect-ratio: 16/9;
             border-radius: 1rem;
+            overflow: hidden;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .pillar-card__icon-wrap {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.8rem;
             background: var(--amber-dim);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.6rem;
+            flex-shrink: 0;
         }
-        .pillar-card__icon-wrap i { font-size: 1.8rem; color: var(--amber); }
+        .pillar-card__icon-wrap i { font-size: 1.6rem; color: var(--amber); }
         .pillar-card__title {
             font-family: var(--font-display);
             font-size: 2rem;
@@ -466,22 +519,28 @@
             color: var(--text-muted);
             line-height: 1.65;
         }
-        .pillar-card__visual {
-    aspect-ratio: 1;
-    border-radius: 0.8rem;
-    overflow: hidden;
-    width: 100%;
-}
-        .pillar-card--wide {
-            grid-column: 1 / -1;
-            grid-template-columns: 2fr 1fr;
+
+        /* scroll dots */
+        .pillars-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 3.2rem;
         }
-        .pillar-card--wide .pillar-card__visual { aspect-ratio: 16/9; }
-        @media (max-width: 800px) {
-            .pillars-grid { grid-template-columns: 1fr; }
-            .pillar-card { grid-template-columns: 1fr; }
-            .pillar-card--wide { grid-template-columns: 1fr; }
-            .pillar-card--wide .pillar-card__visual { aspect-ratio: 4/3; }
+        .pillars-dots__dot {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            background: var(--black-border);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .pillars-dots__dot.active {
+            background: var(--amber);
+            transform: scale(1.4);
+        }
+
+        @media (max-width: 600px) {
+            .pillar-card { flex: 0 0 80vw; }
         }
 
         /* ─── MANIFESTO ──────────────────────────────────────── */
@@ -745,58 +804,73 @@
     <!-- ══════════════════════════════════════════════════════
          SECTION 2 — WHAT HAPPENS INSIDE
     ═══════════════════════════════════════════════════════════ -->
-    <section class="section section--alt" id="experience">
+    <section class="section section--alt" id="experience" style="overflow:hidden;">
         <div class="container">
             <div class="pillars-head">
                 <span class="eyebrow reveal">Inside the Camp</span>
                 <h2 class="display-headline reveal reveal-delay-1">Everything you need<br>to level up, in one place.</h2>
             </div>
-            <div class="pillars-grid">
-                <div class="pillar-card reveal reveal-delay-1">
-                    <div class="pillar-card__text">
-                        <div class="pillar-card__icon-wrap"><i class="fas fa-microphone-alt"></i></div>
-                        <h3 class="pillar-card__title">Professional Recording Sessions</h3>
-                        <p class="pillar-card__body">Work alongside producers, songwriters, and engineers to create music and moments built to last.</p>
-                    </div>
+        </div>
+
+        <div class="pillars-track-wrap">
+            <div class="pillars-track" id="pillarsTrack">
+
+                <div class="pillar-card">
                     <div class="pillar-card__visual iso-placeholder">
                         <i class="fas fa-sliders-h"></i>
                         <span>Studio ISO</span>
                     </div>
-                </div>
-                <div class="pillar-card reveal reveal-delay-2">
-                    <div class="pillar-card__text">
-                        <div class="pillar-card__icon-wrap"><i class="fas fa-fingerprint"></i></div>
-                        <h3 class="pillar-card__title">Artist Development</h3>
-                        <p class="pillar-card__body">Learn how to position yourself as a brand, not just an artist. Find your sound, own your story.</p>
+                    <div>
+                        <div class="pillar-card__icon-wrap"><i class="fas fa-microphone-alt"></i></div>
+                        <h3 class="pillar-card__title">Professional Recording Sessions</h3>
+                        <p class="pillar-card__body">Work alongside producers, songwriters, and engineers to create music and moments built to last.</p>
                     </div>
+                </div>
+
+                <div class="pillar-card">
                     <div class="pillar-card__visual iso-placeholder">
                         <i class="fas fa-user-circle"></i>
                         <span>Brand ISO</span>
                     </div>
-                </div>
-                <div class="pillar-card reveal reveal-delay-3">
-                    <div class="pillar-card__text">
-                        <div class="pillar-card__icon-wrap"><i class="fas fa-comments"></i></div>
-                        <h3 class="pillar-card__title">Music Feedback Sessions</h3>
-                        <p class="pillar-card__body">Constructive, honest critique from industry insiders. Not to tear down — to sharpen what you already have.</p>
+                    <div>
+                        <div class="pillar-card__icon-wrap"><i class="fas fa-fingerprint"></i></div>
+                        <h3 class="pillar-card__title">Artist Development</h3>
+                        <p class="pillar-card__body">Learn how to position yourself as a brand, not just an artist. Find your sound, own your story.</p>
                     </div>
+                </div>
+
+                <div class="pillar-card">
                     <div class="pillar-card__visual iso-placeholder">
                         <i class="fas fa-headphones"></i>
                         <span>Feedback ISO</span>
                     </div>
-                </div>
-                <div class="pillar-card pillar-card--wide reveal reveal-delay-4">
-                    <div class="pillar-card__text">
-                        <div class="pillar-card__icon-wrap"><i class="fas fa-video"></i></div>
-                        <h3 class="pillar-card__title">Content Creation</h3>
-                        <p class="pillar-card__body">Capture performance videos, interviews, behind-the-scenes footage, and promotional assets, ready to drop the moment you leave.</p>
+                    <div>
+                        <div class="pillar-card__icon-wrap"><i class="fas fa-comments"></i></div>
+                        <h3 class="pillar-card__title">Music Feedback Sessions</h3>
+                        <p class="pillar-card__body">Constructive, honest critique from industry insiders. Not to tear down, but to sharpen what you already have.</p>
                     </div>
+                </div>
+
+                <div class="pillar-card">
                     <div class="pillar-card__visual iso-placeholder">
                         <i class="fas fa-film"></i>
                         <span>Content ISO</span>
                     </div>
+                    <div>
+                        <div class="pillar-card__icon-wrap"><i class="fas fa-video"></i></div>
+                        <h3 class="pillar-card__title">Content Creation</h3>
+                        <p class="pillar-card__body">Capture performance videos, interviews, behind-the-scenes footage, and promotional assets, ready to drop the moment you leave.</p>
+                    </div>
                 </div>
+
             </div>
+        </div>
+
+        <div class="pillars-dots" id="pillarsDots">
+            <div class="pillars-dots__dot active"></div>
+            <div class="pillars-dots__dot"></div>
+            <div class="pillars-dots__dot"></div>
+            <div class="pillars-dots__dot"></div>
         </div>
     </section>
 
@@ -983,6 +1057,68 @@
             } else {
                 targets.forEach((el) => el.classList.add('visible'));
             }
+        })();
+    </script>
+
+    <script>
+        /* ─── PILLAR CARD DRAG + AUTO-SCROLL + DOTS ─────────── */
+        (function () {
+            const track = document.getElementById('pillarsTrack');
+            const dots = document.querySelectorAll('#pillarsDots .pillars-dots__dot');
+            if (!track) return;
+
+            /* drag to scroll */
+            let isDown = false, startX, scrollLeft;
+            track.addEventListener('mousedown', function (e) {
+                isDown = true;
+                track.classList.add('is-dragging');
+                startX = e.pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            });
+            document.addEventListener('mouseup', function () {
+                isDown = false;
+                track.classList.remove('is-dragging');
+            });
+            track.addEventListener('mousemove', function (e) {
+                if (!isDown) return;
+                e.preventDefault();
+                var x = e.pageX - track.offsetLeft;
+                track.scrollLeft = scrollLeft - (x - startX);
+            });
+
+            /* dot sync */
+            function updateDots() {
+                var cards = track.querySelectorAll('.pillar-card');
+                var idx = 0;
+                var minDist = Infinity;
+                cards.forEach(function (card, i) {
+                    var dist = Math.abs(card.getBoundingClientRect().left - track.getBoundingClientRect().left);
+                    if (dist < minDist) { minDist = dist; idx = i; }
+                });
+                dots.forEach(function (d, i) {
+                    d.classList.toggle('active', i === idx);
+                });
+            }
+            track.addEventListener('scroll', updateDots, { passive: true });
+
+            /* auto-scroll every 3.5s, pauses on interaction */
+            var autoTimer;
+            function nextCard() {
+                var cards = track.querySelectorAll('.pillar-card');
+                var idx = 0;
+                var minDist = Infinity;
+                cards.forEach(function (card, i) {
+                    var dist = Math.abs(card.getBoundingClientRect().left - track.getBoundingClientRect().left);
+                    if (dist < minDist) { minDist = dist; idx = i; }
+                });
+                var next = cards[(idx + 1) % cards.length];
+                track.scrollTo({ left: next.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+            }
+            function startAuto() { autoTimer = setInterval(nextCard, 3500); }
+            function stopAuto() { clearInterval(autoTimer); }
+            track.addEventListener('pointerdown', function () { stopAuto(); });
+            track.addEventListener('pointerup', function () { setTimeout(startAuto, 5000); });
+            startAuto();
         })();
     </script>
 </body>
