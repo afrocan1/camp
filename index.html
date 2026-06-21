@@ -844,6 +844,246 @@
     border: none;
     padding: 0;
 }
+
+/* ─── CAMP FORM MODAL ─────────────────────────────── */
+.camp-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+.camp-modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+.camp-modal {
+    background: #111111;
+    border: 1px solid rgba(200,151,58,0.2);
+    border-radius: 2rem;
+    width: 100%;
+    max-width: 62rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 4rem;
+    position: relative;
+    transform: translateY(2rem);
+    transition: transform 0.25s var(--ease-out-expo);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(200,151,58,0.2) transparent;
+}
+.camp-modal-overlay.open .camp-modal {
+    transform: translateY(0);
+}
+.camp-modal::-webkit-scrollbar { width: 4px; }
+.camp-modal::-webkit-scrollbar-track { background: transparent; }
+.camp-modal::-webkit-scrollbar-thumb { background: rgba(200,151,58,0.2); border-radius: 10px; }
+
+.camp-modal__close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #f0ede6;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    line-height: 1;
+}
+.camp-modal__close:hover { background: rgba(255,255,255,0.12); }
+
+.camp-modal__eyebrow {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+    display: block;
+}
+.camp-modal__title {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #f0ede6;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.8rem;
+}
+.camp-modal__sub {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 3.2rem;
+    font-family: var(--font-body);
+}
+.camp-modal__sub strong {
+    color: var(--amber);
+    font-weight: 600;
+}
+
+.camp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+.camp-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+}
+@media (max-width: 500px) {
+    .camp-form__row { grid-template-columns: 1fr; }
+    .camp-modal { padding: 3rem 2.4rem; }
+    .camp-modal__title { font-size: 2.2rem; }
+}
+
+.camp-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.camp-form__group.full { grid-column: 1 / -1; }
+
+.camp-form label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+.camp-form input,
+.camp-form textarea,
+.camp-form select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.5rem;
+    color: #f0ede6;
+    font-family: var(--font-body);
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.camp-form input::placeholder,
+.camp-form textarea::placeholder { color: rgba(240,237,230,0.25); }
+.camp-form input:focus,
+.camp-form textarea:focus,
+.camp-form select:focus {
+    border-color: rgba(200,151,58,0.5);
+    background: rgba(200,151,58,0.04);
+}
+.camp-form select option { background: #111111; color: #f0ede6; }
+.camp-form textarea { resize: vertical; min-height: 10rem; }
+
+.camp-form__radio-group {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+.camp-form__radio {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    padding: 0.8rem 1.4rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+.camp-form__radio input { display: none; }
+.camp-form__radio.selected {
+    border-color: var(--amber);
+    color: var(--amber);
+}
+
+.camp-form__notice {
+    background: rgba(200,151,58,0.08);
+    border: 1px solid rgba(200,151,58,0.18);
+    border-radius: 1rem;
+    padding: 1.4rem 1.6rem;
+    font-size: 1.3rem;
+    color: rgba(200,151,58,0.9);
+    font-family: var(--font-body);
+    line-height: 1.5;
+}
+
+.camp-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--amber);
+    color: #0a0a0a;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 1.6rem 3.2rem;
+    border-radius: 10rem;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    width: 100%;
+    margin-top: 0.8rem;
+}
+.camp-form__submit:hover { opacity: 0.88; transform: scale(1.01); }
+.camp-form__submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.camp-modal__success {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: none;
+}
+.camp-modal__success.show { display: block; }
+.camp-modal__success-icon {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: rgba(200,151,58,0.12);
+    border: 1px solid rgba(200,151,58,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.4rem;
+    font-size: 2.4rem;
+    color: var(--amber);
+}
+.camp-modal__success h3 {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #f0ede6;
+    margin-bottom: 1.2rem;
+}
+.camp-modal__success p {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-family: var(--font-body);
+}
     </style>
 </head>
 <body>
@@ -874,8 +1114,132 @@
       </nav>
     </header>
 
-    <!-- Hero wrapper lets canvas sit behind hero content -->
-    <div class="hero-wrapper">
+    <!-- ══════════════════════════════════════════════════════
+     CAMP APPLICATION MODAL
+═══════════════════════════════════════════════════════════ -->
+<div class="camp-modal-overlay" id="campModal">
+    <div class="camp-modal">
+        <button class="camp-modal__close" id="campModalClose">&times;</button>
+
+        <div id="campFormWrap">
+            <span class="camp-modal__eyebrow">Season 1 Application</span>
+            <h2 class="camp-modal__title">Get in the lab.</h2>
+            <p class="camp-modal__sub">
+                Fill this out and we will be in touch. <strong>The first 10 artists get in completely free</strong> — recording, mixing, mastering, distribution, all of it. After that, paid slots open up.
+            </p>
+
+            <form class="camp-form" id="campForm">
+                <input type="hidden" name="_subject" value="New Camp Application - Goaradio Season 1">
+                <input type="hidden" name="_replyto" value="">
+
+                <div class="camp-form__row">
+                    <div class="camp-form__group">
+                        <label for="cf-name">Full Name</label>
+                        <input type="text" id="cf-name" name="full_name" placeholder="Your real name" required>
+                    </div>
+                    <div class="camp-form__group">
+                        <label for="cf-stage">Stage Name</label>
+                        <input type="text" id="cf-stage" name="stage_name" placeholder="What the world calls you">
+                    </div>
+                </div>
+
+                <div class="camp-form__row">
+                    <div class="camp-form__group">
+                        <label for="cf-email">Email</label>
+                        <input type="email" id="cf-email" name="email" placeholder="you@email.com" required>
+                    </div>
+                    <div class="camp-form__group">
+                        <label for="cf-phone">Phone Number</label>
+                        <input type="tel" id="cf-phone" name="phone" placeholder="+233 ...">
+                    </div>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-location">Location</label>
+                    <input type="text" id="cf-location" name="location" placeholder="City, Country" required>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label>If selected, would mobility be a problem?</label>
+                    <div class="camp-form__radio-group" id="mobilityGroup">
+                        <label class="camp-form__radio" data-val="No, I can move">
+                            <input type="radio" name="mobility" value="No, I can move"> No, I can move
+                        </label>
+                        <label class="camp-form__radio" data-val="Yes, it might be">
+                            <input type="radio" name="mobility" value="Yes, it might be"> Yes, it might be
+                        </label>
+                        <label class="camp-form__radio" data-val="Depends on location">
+                            <input type="radio" name="mobility" value="Depends on location"> Depends on location
+                        </label>
+                    </div>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-role">Your Role</label>
+                    <select id="cf-role" name="role" required>
+                        <option value="" disabled selected>What best describes you?</option>
+                        <option>Artist / Vocalist</option>
+                        <option>Producer</option>
+                        <option>Songwriter</option>
+                        <option>Creative (Videographer / Photographer)</option>
+                        <option>Multiple roles</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-genres">Genres You Work In</label>
+                    <input type="text" id="cf-genres" name="genres" placeholder="e.g. Afrobeats, Hip-Hop, R&B, Gospel..." required>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-bio">Your Bio</label>
+                    <textarea id="cf-bio" name="bio" placeholder="Tell us who you are, what you do, and what makes your sound different." required></textarea>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-instagram">Instagram</label>
+                    <input type="text" id="cf-instagram" name="instagram" placeholder="@yourhandle">
+                </div>
+
+                <div class="camp-form__row">
+                    <div class="camp-form__group">
+                        <label for="cf-tiktok">TikTok</label>
+                        <input type="text" id="cf-tiktok" name="tiktok" placeholder="@yourhandle">
+                    </div>
+                    <div class="camp-form__group">
+                        <label for="cf-twitter">X / Twitter</label>
+                        <input type="text" id="cf-twitter" name="twitter" placeholder="@yourhandle">
+                    </div>
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-spotify">Spotify / Apple Music / SoundCloud Link</label>
+                    <input type="url" id="cf-spotify" name="music_link" placeholder="https://...">
+                </div>
+
+                <div class="camp-form__group full">
+                    <label for="cf-goals">What do you want to walk out of camp with?</label>
+                    <textarea id="cf-goals" name="goals" placeholder="Be specific. What does success look like for you after Season 1?" required></textarea>
+                </div>
+
+                <div class="camp-form__notice">
+                    If you are selected as one of the first 10, every service — recording, mixing, mastering, content creation, and distribution — is on us. Zero cost to you.
+                </div>
+
+                <button type="submit" class="camp-form__submit" id="campSubmitBtn">
+                    Submit Application <i class="fas fa-arrow-right" style="font-size:1.2rem;"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="camp-modal__success" id="campSuccess">
+            <div class="camp-modal__success-icon"><i class="fas fa-check"></i></div>
+            <h3>Application received.</h3>
+            <p>We have got your details and the team will review your application. If you make the first 10, you will hear from us directly. Stay locked in.</p>
+        </div>
+    </div>
+</div>
         <canvas id="main"></canvas>
 
         <section class="hero">
@@ -883,7 +1247,7 @@
                 <img src="img/Goaradio white.png" alt="GOARadio Recording Camp" class="hero-visual">
                 <p class="hero-headline">Music is the drug.<br>We run the lab.</p>
                 <div class="hero__cta">
-                    <a href="https://artists.goaradio.org" class="hero__cta-try-free">Apply for Season 1</a>
+                    <a href="#" class="hero__cta-try-free" id="openCampModal">Apply for Season 1</a>
                     <a href="#" class="hero__cta-learn-more" style="color:#ffffff;">How it works &rarr;</a>
                 </div>
             </div>
@@ -1180,7 +1544,7 @@
                 The first 10 artists get in free. After that, paid slots open up. If you are serious about your craft, apply now before the room fills.
             </p>
             <div class="reveal reveal-delay-3" style="margin-top:4.8rem;">
-                <a href="https://artists.goaradio.org" class="cta-pill">
+                <a href="#" class="cta-pill" id="openCampModal2">
                     Apply for Season 1
                     <i class="fas fa-arrow-right" style="font-size:1.2rem;"></i>
                 </a>
@@ -1314,6 +1678,68 @@
         })();
     </script>
 
+<script>
+(function () {
+    var overlay = document.getElementById('campModal');
+    var closeBtn = document.getElementById('campModalClose');
+    var form = document.getElementById('campForm');
+    var submitBtn = document.getElementById('campSubmitBtn');
+    var successPanel = document.getElementById('campSuccess');
+    var formWrap = document.getElementById('campFormWrap');
+
+    function openModal() {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openCampModal').addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+    document.getElementById('openCampModal2').addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+    /* radio pill selection */
+    document.querySelectorAll('#mobilityGroup .camp-form__radio').forEach(function(label) {
+        label.addEventListener('click', function() {
+            document.querySelectorAll('#mobilityGroup .camp-form__radio').forEach(function(l){ l.classList.remove('selected'); });
+            label.classList.add('selected');
+            label.querySelector('input').checked = true;
+        });
+    });
+
+    /* form submission via Formspree */
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        var data = new FormData(form);
+
+        fetch('https://formspree.io/f/mrewzoll', {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(function(res) {
+            if (res.ok) {
+                formWrap.style.display = 'none';
+                successPanel.classList.add('show');
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Something went wrong. Try again.';
+            }
+        })
+        .catch(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Something went wrong. Try again.';
+        });
+    });
+})();
+</script>
 
 <script type="module" src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"></script>
 <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js"></script>
