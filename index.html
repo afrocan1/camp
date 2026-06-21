@@ -1084,6 +1084,64 @@
     line-height: 1.6;
     font-family: var(--font-body);
 }
+/* ─── HOW IT WORKS MODAL ─────────────────────────── */
+.how-step {
+    display: flex;
+    gap: 2rem;
+    padding: 2.4rem 0;
+    border-bottom: 1px solid var(--black-border);
+}
+.how-step:last-child { border-bottom: none; }
+.how-step__num {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    background: rgba(200,151,58,0.1);
+    border: 1px solid rgba(200,151,58,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--amber);
+    flex-shrink: 0;
+}
+.how-step__content h4 {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #f0ede6;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+}
+.how-step__content p {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-family: var(--font-body);
+}
+.how-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 3.2rem;
+    padding-top: 3.2rem;
+    border-top: 1px solid var(--black-border);
+}
+.how-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: rgba(200,151,58,0.08);
+    border: 1px solid rgba(200,151,58,0.18);
+    border-radius: 10rem;
+    padding: 0.7rem 1.4rem;
+    font-size: 1.3rem;
+    color: rgba(200,151,58,0.9);
+    font-family: var(--font-body);
+}
+.how-badge i { font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -1240,6 +1298,77 @@
         </div>
     </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════════
+     HOW IT WORKS MODAL
+═══════════════════════════════════════════════════════════ -->
+<div class="camp-modal-overlay" id="howModal">
+    <div class="camp-modal">
+        <button class="camp-modal__close" id="howModalClose">&times;</button>
+
+        <span class="camp-modal__eyebrow">The Process</span>
+        <h2 class="camp-modal__title">Here is how it works.</h2>
+        <p class="camp-modal__sub">
+            Simple, fast, and built around you. No industry gatekeeping. Just real creative work with a team that is invested in your growth.
+        </p>
+
+        <div class="how-step">
+            <div class="how-step__num">1</div>
+            <div class="how-step__content">
+                <h4>Apply</h4>
+                <p>Fill out the application form. Tell us who you are, what you do, your sound, your socials, and what you want to walk out of camp with. It takes about 5 minutes.</p>
+            </div>
+        </div>
+
+        <div class="how-step">
+            <div class="how-step__num">2</div>
+            <div class="how-step__content">
+                <h4>We Review</h4>
+                <p>The Creative Cartel and Goaradio team goes through every application. We are looking for talent, drive, and creative clarity. Not clout, not follower counts.</p>
+            </div>
+        </div>
+
+        <div class="how-step">
+            <div class="how-step__num">3</div>
+            <div class="how-step__content">
+                <h4>You Get Selected</h4>
+                <p>If you make the cut, we reach out directly. The first 10 artists selected get into camp completely free. After that, remaining slots are paid. So the earlier you apply, the better.</p>
+            </div>
+        </div>
+
+        <div class="how-step">
+            <div class="how-step__num">4</div>
+            <div class="how-step__content">
+                <h4>You Come to Camp</h4>
+                <p>We lock in dates and location once we confirm the roster. You show up ready to work. Everything you need is already there — the studio, the team, the equipment, the energy.</p>
+            </div>
+        </div>
+
+        <div class="how-step">
+            <div class="how-step__num">5</div>
+            <div class="how-step__content">
+                <h4>You Leave with a Full Package</h4>
+                <p>New music recorded, mixed, and mastered. Content shot and ready to post. A release strategy. Industry connections. And distribution through Goaradio so your music actually reaches people.</p>
+            </div>
+        </div>
+
+        <div class="how-badge-row">
+            <span class="how-badge"><i class="fas fa-microphone-alt"></i> Recording</span>
+            <span class="how-badge"><i class="fas fa-sliders-h"></i> Mixing &amp; Mastering</span>
+            <span class="how-badge"><i class="fas fa-video"></i> Content Creation</span>
+            <span class="how-badge"><i class="fas fa-share-alt"></i> Distribution</span>
+            <span class="how-badge"><i class="fas fa-fingerprint"></i> Artist Development</span>
+            <span class="how-badge"><i class="fas fa-users"></i> Industry Connections</span>
+        </div>
+
+        <div style="margin-top:3.2rem;">
+            <button class="camp-form__submit" id="howToApplyBtn">
+                Apply for Season 1 <i class="fas fa-arrow-right" style="font-size:1.2rem;"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
         <div class="hero-wrapper">
         <canvas id="main"></canvas>
 
@@ -1249,7 +1378,7 @@
                 <p class="hero-headline">Music is the drug.<br>We run the lab.</p>
                 <div class="hero__cta">
                     <a href="#" class="hero__cta-try-free" id="openCampModal">Apply for Season 1</a>
-                    <a href="#" class="hero__cta-learn-more" style="color:#ffffff;">How it works &rarr;</a>
+                    <a href="#" class="hero__cta-learn-more" style="color:#ffffff;" id="openHowModal">How it works &rarr;</a>
                 </div>
             </div>
             <div class="hero-biggy">
@@ -1702,6 +1831,20 @@
     closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+    /* how it works modal */
+    var howOverlay = document.getElementById('howModal');
+    var howCloseBtn = document.getElementById('howModalClose');
+    var howToApplyBtn = document.getElementById('howToApplyBtn');
+
+    function openHowModal() { howOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeHowModal() { howOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+    document.getElementById('openHowModal').addEventListener('click', function(e){ e.preventDefault(); openHowModal(); });
+    howCloseBtn.addEventListener('click', closeHowModal);
+    howOverlay.addEventListener('click', function(e){ if(e.target === howOverlay) closeHowModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeHowModal(); });
+    howToApplyBtn.addEventListener('click', function(){ closeHowModal(); openModal(); });
 
     /* radio pill selection */
     document.querySelectorAll('#mobilityGroup .camp-form__radio').forEach(function(label) {
