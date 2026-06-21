@@ -463,9 +463,15 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            padding: 2rem 8vw 4rem;
+            padding: 2rem 0 4rem 8vw;
             cursor: grab;
             align-items: stretch;
+        }
+        .pillars-track::after {
+            content: '';
+            display: block;
+            flex: 0 0 calc(8vw - 2.4rem);
+            min-width: 1px;
         }
         .pillars-track::-webkit-scrollbar { display: none; }
         .pillars-track.is-dragging { cursor: grabbing; user-select: none; }
@@ -874,7 +880,7 @@
                         <i class="fas fa-sliders-h"></i>
                         <span>Studio ISO</span>
                     </div>
-                    <div>
+                    <div class="pillar-card__text">
                         <div class="pillar-card__icon-wrap"><i class="fas fa-microphone-alt"></i></div>
                         <h3 class="pillar-card__title">Professional Recording Sessions</h3>
                         <p class="pillar-card__body">Work alongside producers, songwriters, and engineers to create music and moments built to last.</p>
@@ -886,7 +892,7 @@
                         <i class="fas fa-user-circle"></i>
                         <span>Brand ISO</span>
                     </div>
-                    <div>
+                    <div class="pillar-card__text">
                         <div class="pillar-card__icon-wrap"><i class="fas fa-fingerprint"></i></div>
                         <h3 class="pillar-card__title">Artist Development</h3>
                         <p class="pillar-card__body">Learn how to position yourself as a brand, not just an artist. Find your sound, own your story.</p>
@@ -898,7 +904,7 @@
                         <i class="fas fa-headphones"></i>
                         <span>Feedback ISO</span>
                     </div>
-                    <div>
+                    <div class="pillar-card__text">
                         <div class="pillar-card__icon-wrap"><i class="fas fa-comments"></i></div>
                         <h3 class="pillar-card__title">Music Feedback Sessions</h3>
                         <p class="pillar-card__body">Constructive, honest critique from industry insiders. Not to tear down, but to sharpen what you already have.</p>
@@ -910,7 +916,7 @@
                         <i class="fas fa-film"></i>
                         <span>Content ISO</span>
                     </div>
-                    <div>
+                    <div class="pillar-card__text">
                         <div class="pillar-card__icon-wrap"><i class="fas fa-video"></i></div>
                         <h3 class="pillar-card__title">Content Creation</h3>
                         <p class="pillar-card__body">Capture performance videos, interviews, behind-the-scenes footage, and promotional assets, ready to drop the moment you leave.</p>
